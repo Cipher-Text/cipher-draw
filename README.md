@@ -33,3 +33,9 @@ Rendered Markdown and SVG are sanitized to reduce XSS risk. Mermaid output is sa
 ## Feature Flags (Scaffold)
 - `NEXT_PUBLIC_FEATURE_AUTH=false`
 - `NEXT_PUBLIC_FEATURE_SAVE=false`
+
+## Documentation
+- `docs/README.md`
+- `docs/PRODUCT_REQUIREMENTS.md`
+- `docs/PRODUCT_ROADMAP.md`
+- `docs/ARCHITECTURE.md`
