@@ -1,8 +1,8 @@
 # Cipher Draw — Current Status
 
 **Last Updated:** February 27, 2026
-**Phase:** Phase 1 (MVP Editor) - 85% Complete
-**Next Milestone:** Public Beta Launch (1-2 days)
+**Phase:** Phase 1 (MVP Editor) - 90% Complete
+**Next Milestone:** Public Beta Launch (1 day)
 
 ---
 
@@ -13,14 +13,14 @@
 ✅ Live preview with 300ms debounce
 ✅ Export to SVG, PNG, PDF, MD
 ✅ URL-based sharing via compressed hash
+✅ **Read-only view page** ⭐ NEW
+✅ **Fork functionality** ⭐ NEW
 ✅ Dark/light theme system
 ✅ Resizable split panes
 ✅ Sample templates
 ✅ State persistence (localStorage)
 
 **What's Missing:**
-⚠️ `/view/[token]` page for read-only shared links
-⚠️ Fork functionality
 ⚠️ Keyboard shortcuts (Ctrl+S, Ctrl+Enter)
 ⚠️ Mobile responsive testing
 ⚠️ CI/CD pipeline
@@ -31,7 +31,7 @@
 ## 📊 Phase Progress
 
 ```
-Phase 1: MVP Editor           ████████████████░░ 85%  🔄 Active
+Phase 1: MVP Editor           ██████████████████░ 90%  🔄 Active
 Phase 2: Accounts & Spaces    ░░░░░░░░░░░░░░░░░░  0%  ⏸️ Not Started
 Phase 3: AI Layer             ░░░░░░░░░░░░░░░░░░  0%  ⏸️ Not Started
 Phase 4: Sharing & Gallery    ░░░░░░░░░░░░░░░░░░  0%  ⏸️ Not Started
@@ -44,32 +44,46 @@ Phase 5: Collaboration        ░░░░░░░░░░░░░░░░�
 
 ### Critical (Blocking Public Beta)
 
-#### 1. Read-Only View Page
-**Priority:** P0 | **Time:** 2-3 hours | **Status:** ❌ Not Started
+#### 1. Read-Only View Page ✅ COMPLETE
+**Priority:** P0 | **Time:** 2-3 hours | **Status:** ✅ Complete
 
 Create `/view/[token]` route for read-only sharing:
-- [ ] Decode state from URL hash
-- [ ] Render in read-only mode (preview only, no editor)
-- [ ] Show title, mode badge, theme selector
-- [ ] Add "Fork this" button → copies content to editor
-- [ ] Add "Open in Editor" link
-- [ ] Metadata footer: "Created with Cipher Draw"
+- [x] Decode state from URL hash
+- [x] Render in read-only mode (preview only, no editor)
+- [x] Show title, mode badge, theme selector
+- [x] Add "Fork this" button → copies content to editor
+- [x] Add "Open in Editor" link
+- [x] Metadata footer: "Created with Cipher Draw"
+- [x] Loading state with spinner
+- [x] Error handling for invalid/corrupted links
+- [x] Export functionality (SVG, PNG, PDF)
 
-**Files to create:**
-- `apps/web/app/view/[token]/page.tsx`
+**Files created:**
+- `apps/web/app/view/[token]/page.tsx` ✅
+
+**Implementation notes:**
+- Uses `readStateFromHash()` to decode shared state
+- Shows loading spinner while decoding
+- Graceful error handling with helpful message
+- "Fork to Editor" button redirects to home with hash
+- Full export support in view mode
+- Theme toggle and preview background options
 
 ---
 
-#### 2. Fork Functionality
-**Priority:** P0 | **Time:** 1 hour | **Status:** ❌ Not Started
+#### 2. Fork Functionality ✅ COMPLETE (included in View Page)
+**Priority:** P0 | **Time:** 1 hour | **Status:** ✅ Complete
 
-- [ ] "Fork" button on view page
-- [ ] On click → redirect to home with content in URL hash
-- [ ] Editor auto-loads forked content
+- [x] "Fork" button on view page
+- [x] On click → redirect to home with content in URL hash
+- [x] Editor auto-loads forked content
+
+**Implementation:**
+Integrated into View Page (task #1). Fork button uses `router.push(\`/#${window.location.hash.slice(1)}\`)` to redirect to home page with content in hash.
 
 ---
 
-#### 3. Keyboard Shortcuts
+#### 3. Keyboard Shortcuts ⬅️ NEXT PRIORITY
 **Priority:** P0 | **Time:** 1-2 hours | **Status:** ❌ Not Started
 
 - [ ] `Ctrl+S` / `Cmd+S` → Save to localStorage + show toast

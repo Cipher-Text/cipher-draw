@@ -49,6 +49,31 @@
   - Security boundaries
   - Engineering guidelines
 
+### 🤖 Development Guides
+- **[IMPLEMENTATION_GUIDE.md](./IMPLEMENTATION_GUIDE.md)** ⭐ FOR AI ASSISTANTS
+  - Complete codebase reference
+  - Implementation patterns
+  - Common pitfalls
+  - Debugging tips
+
+- **[WORKFLOW.md](./WORKFLOW.md)**
+  - Development workflow
+  - Documentation sync process
+  - Post-implementation checklist
+  - Git commit conventions
+
+- **[NEXT_FEATURES.md](./NEXT_FEATURES.md)**
+  - Prioritized feature list
+  - Implementation recommendations
+  - Impact analysis
+  - What NOT to build yet
+
+### 💰 Business
+- **[PRICING.md](./PRICING.md)**
+  - Pricing tiers and strategy
+  - Revenue model
+  - Competitive positioning
+
 ---
 
 ## 🗺️ Current Status
