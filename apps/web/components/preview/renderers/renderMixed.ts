@@ -1,3 +1,5 @@
+'use client';
+
 import { renderMarkdown } from '@/components/preview/renderers/renderMarkdown';
 import { renderMermaid } from '@/components/preview/renderers/renderMermaid';
 

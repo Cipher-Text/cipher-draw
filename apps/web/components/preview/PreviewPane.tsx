@@ -77,5 +77,15 @@ export const PreviewPane = forwardRef<HTMLDivElement, PreviewPaneProps>(function
     );
   }
 
-  return <div ref={ref} className={cn(panelClassName, 'prose prose-invert max-w-none')} dangerouslySetInnerHTML={{ __html: html }} />;
+  return (
+    <div
+      ref={ref}
+      className={cn(
+        panelClassName,
+        'max-w-none',
+        previewBg === 'white' ? 'prose' : 'prose prose-invert'
+      )}
+      dangerouslySetInnerHTML={{ __html: html }}
+    />
+  );
 });

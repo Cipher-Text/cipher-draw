@@ -1,3 +1,5 @@
+'use client';
+
 import { sanitizeSvg } from '@/lib/sanitize/sanitize';
 
 let initialized = false;

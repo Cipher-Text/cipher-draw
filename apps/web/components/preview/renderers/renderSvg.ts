@@ -1,3 +1,5 @@
+'use client';
+
 import { sanitizeSvg } from '@/lib/sanitize/sanitize';
 
 export function renderSvg(rawSvg: string): string {
