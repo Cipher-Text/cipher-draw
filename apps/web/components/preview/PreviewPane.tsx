@@ -42,16 +42,19 @@ export const PreviewPane = forwardRef<HTMLDivElement, PreviewPaneProps>(function
         let nextHtml = '';
         let svg: string | null = null;
 
+        const mermaidTheme: 'dark' | 'light' =
+          previewBg === 'white' ? 'light' : previewBg === 'dark' ? 'dark' : theme;
+
         if (mode === 'markdown') {
           nextHtml = await renderMarkdown(content);
         } else if (mode === 'mermaid') {
-          svg = await renderMermaid(content, theme);
+          svg = await renderMermaid(content, mermaidTheme);
           nextHtml = `<div class="mermaid-root">${svg}</div>`;
         } else if (mode === 'svg') {
           svg = renderSvg(content);
           nextHtml = `<div class="svg-root">${svg}</div>`;
         } else {
-          nextHtml = await renderMixed(content, theme);
+          nextHtml = await renderMixed(content, mermaidTheme);
         }
 
         setHtml(nextHtml);
@@ -66,7 +69,7 @@ export const PreviewPane = forwardRef<HTMLDivElement, PreviewPaneProps>(function
     }, 300);
 
     return () => clearTimeout(timer);
-  }, [mode, content, theme, onSvgChange, onRenderStatus]);
+  }, [mode, content, theme, previewBg, onSvgChange, onRenderStatus]);
 
   if (error) {
     return (
