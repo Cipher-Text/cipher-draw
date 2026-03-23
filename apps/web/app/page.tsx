@@ -119,7 +119,7 @@ export default function HomePage() {
     };
   }, [isDragging]);
 
-  const appClass = cn('flex h-screen flex-col', theme === 'dark' && 'dark');
+  const appClass = cn('flex h-screen flex-col bg-background text-foreground', theme === 'dark' && 'dark');
 
   const handleExport = useCallback(
     async (action: ExportAction) => {
@@ -196,7 +196,7 @@ export default function HomePage() {
         <div className="flex items-center gap-2">
           <h1 className="text-lg font-semibold">Cipher Draw</h1>
           <input
-            className="h-9 rounded-md border bg-background px-3 text-sm"
+            className="h-9 rounded-md border bg-background px-3 text-sm text-foreground placeholder:text-muted-foreground"
             value={title}
             onChange={(event) => setTitle(event.target.value)}
             placeholder="Document title"
