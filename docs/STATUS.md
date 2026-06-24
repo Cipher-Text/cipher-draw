@@ -24,7 +24,7 @@
 
 **What's Missing:**
 ⚠️ Mobile responsive testing
-⚠️ CI/CD pipeline
+✅ CI/CD pipeline (GitHub Actions)
 ⚠️ System theme detection
 ⚠️ Toast notifications (unsaved warning, share/export feedback)
 
@@ -109,15 +109,18 @@ Integrated into View Page (task #1). Fork button uses `router.push(\`/#${window.
 
 ---
 
-#### 5. CI/CD Pipeline
-**Priority:** P0 | **Time:** 2-3 hours | **Status:** ❌ Not Started
+#### 5. CI/CD Pipeline ✅ COMPLETE
+**Priority:** P0 | **Time:** 2-3 hours | **Status:** ✅ Complete
 
-- [ ] Create `.github/workflows/ci.yml`
-- [ ] Lint check (ESLint + Prettier)
-- [ ] Type check (TypeScript)
-- [ ] Test run (Vitest)
-- [ ] Build check (Next.js build)
-- [ ] Run on every PR and push to main
+- [x] Create `.github/workflows/ci.yml`
+- [x] Lint check (ESLint)
+- [x] Type check (TypeScript `tsc --noEmit`)
+- [x] Test run (Vitest)
+- [x] Build check (Next.js build)
+- [x] Runs on every PR and push to master
+
+**Files created:**
+- `.github/workflows/ci.yml`
 
 ---
 
@@ -320,8 +323,7 @@ apps/web/
 5. **Theme doesn't match system** - Always starts in dark mode
    - **Solution:** System preference detection (TO DO)
 
-6. **Debug toolbar visible** - `page.tsx:262` shows `Phase 2 flags: auth=false save=false` in the UI
-   - **Solution:** Remove before public beta launch
+6. ~~**Debug toolbar**~~ — removed ✅
 
 ---
 

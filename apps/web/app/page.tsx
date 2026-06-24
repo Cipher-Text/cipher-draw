@@ -35,11 +35,6 @@ const languageByMode: Record<DocMode, string> = {
   mixed: 'markdown'
 };
 
-const featureFlags = {
-  auth: process.env.NEXT_PUBLIC_FEATURE_AUTH === 'true',
-  save: process.env.NEXT_PUBLIC_FEATURE_SAVE === 'true'
-};
-
 function downloadMarkdown(content: string, title: string): void {
   const blob = new Blob([content], { type: 'text/markdown;charset=utf-8' });
   const url = URL.createObjectURL(blob);
@@ -278,9 +273,6 @@ export default function HomePage() {
         <Button variant="outline" size="sm" onClick={() => setContent(getTemplateForMode(mode))}>
           Load Sample
         </Button>
-        <div className="text-xs text-muted-foreground">
-          Phase 2 flags: auth={String(featureFlags.auth)} save={String(featureFlags.save)}
-        </div>
       </div>
 
       <div ref={rootRef} className="min-h-0 flex-1">
