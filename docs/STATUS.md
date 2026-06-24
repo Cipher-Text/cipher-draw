@@ -1,8 +1,8 @@
 # Cipher Draw — Current Status
 
-**Last Updated:** February 27, 2026
-**Phase:** Phase 1 (MVP Editor) - 90% Complete
-**Next Milestone:** Public Beta Launch (1 day)
+**Last Updated:** June 24, 2026
+**Phase:** Phase 1 (MVP Editor) - 95% Complete
+**Next Milestone:** Public Beta Launch
 
 ---
 
@@ -13,18 +13,20 @@
 ✅ Live preview with 300ms debounce
 ✅ Export to SVG, PNG, PDF, MD
 ✅ URL-based sharing via compressed hash
-✅ **Read-only view page** ⭐ NEW
-✅ **Fork functionality** ⭐ NEW
+✅ **Read-only view page** ⭐
+✅ **Fork functionality** ⭐
+✅ **Keyboard shortcuts** (Ctrl+S, Ctrl+Enter) ⭐ NEW
+✅ **Share link feedback** (Copied! button state) ⭐ NEW
 ✅ Dark/light theme system
 ✅ Resizable split panes
 ✅ Sample templates
 ✅ State persistence (localStorage)
 
 **What's Missing:**
-⚠️ Keyboard shortcuts (Ctrl+S, Ctrl+Enter)
 ⚠️ Mobile responsive testing
 ⚠️ CI/CD pipeline
 ⚠️ System theme detection
+⚠️ Toast notifications (unsaved warning, share/export feedback)
 
 ---
 
@@ -83,13 +85,16 @@ Integrated into View Page (task #1). Fork button uses `router.push(\`/#${window.
 
 ---
 
-#### 3. Keyboard Shortcuts ⬅️ NEXT PRIORITY
-**Priority:** P0 | **Time:** 1-2 hours | **Status:** ❌ Not Started
+#### 3. Keyboard Shortcuts ✅ COMPLETE
+**Priority:** P0 | **Time:** 1-2 hours | **Status:** ✅ Complete
 
-- [ ] `Ctrl+S` / `Cmd+S` → Save to localStorage + show toast
-- [ ] `Ctrl+Enter` / `Cmd+Enter` → Force re-render
-- [ ] Prevent default browser behavior
-- [ ] Show shortcut hints in UI
+- [x] `Ctrl+S` / `Cmd+S` → flashes "Saved" in status bar for 2s
+- [x] `Ctrl+Enter` / `Cmd+Enter` → force re-renders preview
+- [x] Prevent default browser behavior
+
+**Files modified:**
+- `apps/web/app/page.tsx` — keyboard shortcut effect, `savedState`, `renderTick`
+- `apps/web/components/preview/PreviewPane.tsx` — `renderTick` prop in deps
 
 ---
 
@@ -265,7 +270,7 @@ apps/web/
 │   ├── page.tsx                    # Main editor ✅
 │   ├── layout.tsx                  # Root layout ✅
 │   ├── globals.css                 # Styles ✅
-│   └── view/[token]/page.tsx       # View page ❌ TO DO
+│   └── view/[token]/page.tsx       # View page ✅
 │
 ├── components/
 │   ├── editor/
@@ -314,6 +319,9 @@ apps/web/
 
 5. **Theme doesn't match system** - Always starts in dark mode
    - **Solution:** System preference detection (TO DO)
+
+6. **Debug toolbar visible** - `page.tsx:262` shows `Phase 2 flags: auth=false save=false` in the UI
+   - **Solution:** Remove before public beta launch
 
 ---
 
