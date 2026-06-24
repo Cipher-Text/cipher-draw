@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Select } from '@/components/ui/select';
 import { readStateFromHash } from '@/lib/share/hash';
 import { cn } from '@/lib/utils';
-import type { DocMode, DocState, RenderStatus, ThemeMode } from '@/types';
+import type { DocState, RenderStatus, ThemeMode } from '@/types';
 
 type ExportAction = 'none' | 'svg' | 'png' | 'pdf';
 

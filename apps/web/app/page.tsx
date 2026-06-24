@@ -76,6 +76,9 @@ export default function HomePage() {
   const [svgForExport, setSvgForExport] = useState<string | null>(null);
   const [renderStatus, setRenderStatus] = useState<RenderStatus>({ ok: true, message: 'Rendered OK' });
   const [exportAction, setExportAction] = useState<ExportAction>('none');
+  const [renderTick, setRenderTick] = useState(0);
+  const [copiedState, setCopiedState] = useState<'idle' | 'copied'>('idle');
+  const [savedState, setSavedState] = useState<'idle' | 'saved'>('idle');
 
   const onRenderStatus = useCallback((status: RenderStatus) => {
     setRenderStatus(status);
@@ -118,6 +121,23 @@ export default function HomePage() {
       window.removeEventListener('mouseup', onUp);
     };
   }, [isDragging]);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const mod = e.metaKey || e.ctrlKey;
+      if (mod && e.key === 's') {
+        e.preventDefault();
+        setSavedState('saved');
+        setTimeout(() => setSavedState('idle'), 2000);
+      }
+      if (mod && e.key === 'Enter') {
+        e.preventDefault();
+        setRenderTick((t) => t + 1);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   const appClass = cn('flex h-screen flex-col bg-background text-foreground', theme === 'dark' && 'dark');
 
@@ -179,6 +199,8 @@ export default function HomePage() {
       return;
     }
     await navigator.clipboard.writeText(url);
+    setCopiedState('copied');
+    setTimeout(() => setCopiedState('idle'), 2000);
   }, [mode, content, theme]);
 
   useEffect(() => {
@@ -238,7 +260,7 @@ export default function HomePage() {
             ]}
           />
           <Button variant="secondary" size="sm" onClick={handleShare}>
-            Share Link
+            {copiedState === 'copied' ? 'Copied!' : 'Share Link'}
           </Button>
         </div>
       </div>
@@ -283,6 +305,7 @@ export default function HomePage() {
               previewBg={previewBg}
               onSvgChange={onSvgChange}
               onRenderStatus={onRenderStatus}
+              renderTick={renderTick}
             />
           </div>
         )}
@@ -312,6 +335,7 @@ export default function HomePage() {
                 previewBg={previewBg}
                 onSvgChange={onSvgChange}
                 onRenderStatus={onRenderStatus}
+                renderTick={renderTick}
               />
             </div>
           </div>
@@ -320,7 +344,12 @@ export default function HomePage() {
 
       <div className="flex items-center justify-between border-t px-4 py-2 text-xs text-muted-foreground">
         <div>
-          Mode: <span className="font-medium">{mode}</span> | {renderStatus.message}
+          Mode: <span className="font-medium">{mode}</span> |{' '}
+          {savedState === 'saved' ? (
+            <span className="text-green-500">Saved</span>
+          ) : (
+            renderStatus.message
+          )}
         </div>
         <div>URL share enabled</div>
       </div>

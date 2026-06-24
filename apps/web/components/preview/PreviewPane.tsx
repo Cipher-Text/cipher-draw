@@ -16,6 +16,7 @@ type PreviewPaneProps = {
   previewBg: PreviewBackground;
   onSvgChange: (svg: string | null) => void;
   onRenderStatus: (status: RenderStatus) => void;
+  renderTick?: number;
 };
 
 const previewBgClass: Record<PreviewBackground, string> = {
@@ -25,7 +26,7 @@ const previewBgClass: Record<PreviewBackground, string> = {
 };
 
 export const PreviewPane = forwardRef<HTMLDivElement, PreviewPaneProps>(function PreviewPane(
-  { mode, content, theme, previewBg, onSvgChange, onRenderStatus },
+  { mode, content, theme, previewBg, onSvgChange, onRenderStatus, renderTick },
   ref
 ) {
   const [html, setHtml] = useState('');
@@ -69,7 +70,7 @@ export const PreviewPane = forwardRef<HTMLDivElement, PreviewPaneProps>(function
     }, 300);
 
     return () => clearTimeout(timer);
-  }, [mode, content, theme, previewBg, onSvgChange, onRenderStatus]);
+  }, [mode, content, theme, previewBg, onSvgChange, onRenderStatus, renderTick]);
 
   if (error) {
     return (
