@@ -108,7 +108,7 @@ export default function ViewPage() {
     void handleExport(exportAction);
   }, [exportAction, handleExport]);
 
-  const appClass = cn('flex h-screen flex-col', theme === 'dark' && 'dark');
+  const appClass = cn('flex h-screen flex-col bg-background text-foreground', theme === 'dark' && 'dark');
 
   if (isLoading) {
     return (

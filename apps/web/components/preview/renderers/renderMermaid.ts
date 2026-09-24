@@ -12,7 +12,9 @@ async function getMermaid() {
     mermaid.initialize({
       startOnLoad: false,
       securityLevel: 'strict',
-      theme: 'default'
+      theme: 'default',
+      htmlLabels: false,
+      flowchart: { htmlLabels: false }
     });
     initialized = true;
   }
@@ -26,7 +28,9 @@ export async function renderMermaid(definition: string, theme: 'dark' | 'light')
   mermaid.initialize({
     startOnLoad: false,
     securityLevel: 'strict',
-    theme: theme === 'dark' ? 'dark' : 'default'
+    theme: theme === 'dark' ? 'dark' : 'default',
+    htmlLabels: false,
+    flowchart: { htmlLabels: false }
   });
 
   const id = `mermaid-${Math.random().toString(36).slice(2, 10)}`;
