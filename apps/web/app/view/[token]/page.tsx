@@ -140,19 +140,19 @@ export default function ViewPage() {
   return (
     <div className={appClass}>
       {/* Navbar */}
-      <div className="flex items-center justify-between gap-3 border-b bg-background px-4 py-2">
-        <div className="flex items-center gap-3">
-          <h1 className="text-lg font-semibold">🧩 Cipher Draw</h1>
-          <span className="text-sm text-muted-foreground">|</span>
-          <h2 className="text-sm font-medium">{state.title || 'Untitled'}</h2>
+      <div className="flex flex-col gap-2 border-b bg-background px-3 py-2 sm:flex-row sm:items-center sm:justify-between sm:gap-3 sm:px-4">
+        <div className="flex min-w-0 items-center gap-3">
+          <h1 className="shrink-0 text-lg font-semibold">🧩 Cipher Draw</h1>
+          <span className="hidden text-sm text-muted-foreground sm:inline">|</span>
+          <h2 className="truncate text-sm font-medium">{state.title || 'Untitled'}</h2>
           {state.mode && (
-            <span className="rounded-md bg-primary/10 px-2 py-1 text-xs font-medium text-primary">
+            <span className="shrink-0 rounded-md bg-primary/10 px-2 py-1 text-xs font-medium text-primary">
               {state.mode}
             </span>
           )}
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           <Select
             ariaLabel="Preview background"
             value={previewBg}
@@ -197,11 +197,11 @@ export default function ViewPage() {
       </div>
 
       {/* Footer */}
-      <div className="flex items-center justify-between border-t bg-background px-4 py-2 text-xs text-muted-foreground">
-        <div>
+      <div className="flex flex-wrap items-center justify-between gap-1 border-t bg-background px-3 py-2 text-xs text-muted-foreground sm:px-4">
+        <div className="min-w-0 truncate">
           Mode: <span className="font-medium">{state.mode || 'unknown'}</span> | {renderStatus.message}
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex shrink-0 items-center gap-2">
           <span>Read-only view</span>
           <span>•</span>
           <a

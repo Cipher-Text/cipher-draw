@@ -96,6 +96,18 @@ export default function HomePage() {
   }, [applySharedState]);
 
   useEffect(() => {
+    const mql = window.matchMedia('(max-width: 639px)');
+    const onChange = (event: MediaQueryListEvent | MediaQueryList) => {
+      if (event.matches) {
+        setViewMode((current) => (current === 'split' ? 'editor' : current));
+      }
+    };
+    onChange(mql);
+    mql.addEventListener('change', onChange);
+    return () => mql.removeEventListener('change', onChange);
+  }, []);
+
+  useEffect(() => {
     const onMove = (event: MouseEvent) => {
       if (!isDragging || !rootRef.current) {
         return;
@@ -209,11 +221,11 @@ export default function HomePage() {
 
   return (
     <div className={appClass}>
-      <div className="flex items-center justify-between gap-3 border-b bg-background px-4 py-2">
+      <div className="flex flex-col gap-2 border-b bg-background px-3 py-2 sm:flex-row sm:items-center sm:justify-between sm:gap-3 sm:px-4">
         <div className="flex items-center gap-2">
-          <h1 className="text-lg font-semibold">Cipher Draw</h1>
+          <h1 className="shrink-0 text-lg font-semibold">Cipher Draw</h1>
           <input
-            className="h-9 rounded-md border bg-background px-3 text-sm text-foreground placeholder:text-muted-foreground"
+            className="h-11 min-w-0 flex-1 rounded-md border bg-background px-3 text-sm text-foreground placeholder:text-muted-foreground sm:h-9 sm:w-48 sm:flex-none"
             value={title}
             onChange={(event) => setTitle(event.target.value)}
             placeholder="Document title"
@@ -221,7 +233,7 @@ export default function HomePage() {
           />
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           <Select
             ariaLabel="Mode selector"
             value={mode}
@@ -260,11 +272,16 @@ export default function HomePage() {
         </div>
       </div>
 
-      <div className="flex items-center gap-2 border-b px-4 py-2">
+      <div className="flex flex-wrap items-center gap-2 border-b px-3 py-2 sm:px-4">
         <Button variant={viewMode === 'editor' ? 'default' : 'outline'} size="sm" onClick={() => setViewMode('editor')}>
           Editor
         </Button>
-        <Button variant={viewMode === 'split' ? 'default' : 'outline'} size="sm" onClick={() => setViewMode('split')}>
+        <Button
+          variant={viewMode === 'split' ? 'default' : 'outline'}
+          size="sm"
+          onClick={() => setViewMode('split')}
+          className="hidden sm:inline-flex"
+        >
           Split
         </Button>
         <Button variant={viewMode === 'preview' ? 'default' : 'outline'} size="sm" onClick={() => setViewMode('preview')}>
@@ -303,7 +320,7 @@ export default function HomePage() {
         )}
 
         {viewMode === 'split' && (
-          <div className="flex h-full">
+          <div className="hidden h-full sm:flex">
             <div style={{ width: `${splitRatio}%` }} className="min-w-0">
               <MonacoEditor
                 value={content}
@@ -334,8 +351,8 @@ export default function HomePage() {
         )}
       </div>
 
-      <div className="flex items-center justify-between border-t px-4 py-2 text-xs text-muted-foreground">
-        <div>
+      <div className="flex flex-wrap items-center justify-between gap-1 border-t px-3 py-2 text-xs text-muted-foreground sm:px-4">
+        <div className="min-w-0 truncate">
           Mode: <span className="font-medium">{mode}</span> |{' '}
           {savedState === 'saved' ? (
             <span className="text-green-500">Saved</span>
@@ -343,7 +360,7 @@ export default function HomePage() {
             renderStatus.message
           )}
         </div>
-        <div>URL share enabled</div>
+        <div className="shrink-0">URL share enabled</div>
       </div>
     </div>
   );

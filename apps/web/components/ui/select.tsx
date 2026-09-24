@@ -18,7 +18,7 @@ export function Select({ value, onChange, options, className, ariaLabel }: Selec
     <select
       aria-label={ariaLabel}
       className={cn(
-        'h-9 rounded-md border border-input bg-background px-3 text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-ring',
+        'h-11 rounded-md border border-input bg-background px-3 text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-ring sm:h-9',
         className
       )}
       value={value}

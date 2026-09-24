@@ -1,7 +1,7 @@
 # Cipher Draw — Current Status
 
-**Last Updated:** June 24, 2026
-**Phase:** Phase 1 (MVP Editor) - 95% Complete
+**Last Updated:** September 25, 2026
+**Phase:** Phase 1 (MVP Editor) - 98% Complete
 **Next Milestone:** Public Beta Launch
 
 ---
@@ -15,16 +15,18 @@
 ✅ URL-based sharing via compressed hash
 ✅ **Read-only view page** ⭐
 ✅ **Fork functionality** ⭐
-✅ **Keyboard shortcuts** (Ctrl+S, Ctrl+Enter) ⭐ NEW
-✅ **Share link feedback** (Copied! button state) ⭐ NEW
+✅ **Keyboard shortcuts** (Ctrl+S, Ctrl+Enter) ⭐
+✅ **Share link feedback** (Copied! button state) ⭐
+✅ **Mobile-responsive layout** (tab fallback, 44px touch targets) ⭐ NEW
 ✅ Dark/light theme system
-✅ Resizable split panes
+✅ Resizable split panes (desktop)
 ✅ Sample templates
 ✅ State persistence (localStorage)
 
 **What's Missing:**
-⚠️ Mobile responsive testing
 ✅ CI/CD pipeline (GitHub Actions)
+⚠️ Vercel dashboard linking (config is ready, needs account access)
+⚠️ Mobile QA on real iOS Safari / Android Chrome devices
 ⚠️ System theme detection
 ⚠️ Toast notifications (unsaved warning, share/export feedback)
 
@@ -33,7 +35,7 @@
 ## 📊 Phase Progress
 
 ```
-Phase 1: MVP Editor           ██████████████████░ 90%  🔄 Active
+Phase 1: MVP Editor           ███████████████████░ 98%  🔄 Active
 Phase 2: Accounts & Spaces    ░░░░░░░░░░░░░░░░░░  0%  ⏸️ Not Started
 Phase 3: AI Layer             ░░░░░░░░░░░░░░░░░░  0%  ⏸️ Not Started
 Phase 4: Sharing & Gallery    ░░░░░░░░░░░░░░░░░░  0%  ⏸️ Not Started
@@ -98,14 +100,20 @@ Integrated into View Page (task #1). Fork button uses `router.push(\`/#${window.
 
 ---
 
-#### 4. Mobile Responsive
-**Priority:** P0 | **Time:** 3-4 hours | **Status:** ⚠️ Needs Testing
+#### 4. Mobile Responsive ✅ COMPLETE
+**Priority:** P0 | **Time:** 3-4 hours | **Status:** ✅ Complete (pending real-device QA)
 
-- [ ] Test on iOS Safari, Android Chrome
-- [ ] Implement tab-based view if split pane breaks
-- [ ] Ensure 44px min touch targets
-- [ ] Test export functions on mobile
-- [ ] Test share functionality on mobile
+- [x] Implement tab-based view if split pane breaks — "Split" tab is hidden below 640px and the editor auto-falls back to the "Editor" tab; Editor/Preview remain as explicit tabs on mobile
+- [x] Ensure 44px min touch targets — `Button` and `Select` are `h-11` by default and shrink to the desktop `h-8`/`h-9` sizing at the `sm:` breakpoint (640px+)
+- [x] Header/footer/toolbar wrap instead of overflowing on narrow viewports (`page.tsx` and `view/[token]/page.tsx`)
+- [ ] Test on iOS Safari, Android Chrome (needs a real-device pass — not verifiable from this environment)
+- [ ] Test export functions on mobile (needs a real-device pass)
+- [ ] Test share functionality on mobile (needs a real-device pass)
+
+**Files modified:**
+- `apps/web/app/page.tsx` — responsive header/toolbar/footer, matchMedia fallback off `split` below 640px
+- `apps/web/app/view/[token]/page.tsx` — responsive navbar/footer
+- `apps/web/components/ui/button.tsx`, `apps/web/components/ui/select.tsx` — 44px touch targets on mobile
 
 ---
 
@@ -125,13 +133,17 @@ Integrated into View Page (task #1). Fork button uses `router.push(\`/#${window.
 ---
 
 #### 6. Vercel Deployment
-**Priority:** P0 | **Time:** 1 hour | **Status:** ❌ Not Started
+**Priority:** P0 | **Time:** 1 hour | **Status:** ⚠️ Config ready, dashboard setup pending
 
-- [ ] Create `vercel.json` configuration
-- [ ] Set up environment variables in Vercel
-- [ ] Set up preview deployments for PRs
-- [ ] Set up production deployment from main
-- [ ] Test production build
+- [x] Create `vercel.json` configuration (repo root — `pnpm -C apps/web build`, output `apps/web/.next`)
+- [x] Test production build (`pnpm -C apps/web build` succeeds; see note below)
+- [ ] Set up environment variables in Vercel (none required for Phase 1 — nothing to configure yet)
+- [ ] Set up preview deployments for PRs (automatic once the repo is linked in the Vercel dashboard)
+- [ ] Set up production deployment from main (link the repo in Vercel and select `master` as the production branch)
+
+**Note:** local `pnpm build` can fail with a `<Html> should not be imported...` / `useContext` error if your shell has `NODE_ENV=development` exported globally — this mixes dev/prod React bundles. Run `NODE_ENV=production pnpm -C apps/web build` locally, or unset `NODE_ENV` in your shell profile. Vercel's own build environment always sets `NODE_ENV=production`, so this does not affect deployment.
+
+**Remaining work requires Vercel account access** (linking the repo, confirming the production branch) and isn't something that can be done from this environment.
 
 ---
 
@@ -311,8 +323,7 @@ apps/web/
 1. **URL length limit** - Hash-based sharing fails for very large documents (>8KB)
    - **Solution:** Phase 2 server-side save with short tokens
 
-2. **No mobile optimization** - Layout may break on small screens
-   - **Solution:** Tab-based view (TO DO)
+2. ~~**No mobile optimization**~~ — layout is now responsive (tab fallback below 640px, 44px touch targets); still needs a real-device QA pass ✅
 
 3. **Mermaid errors cryptic** - Hard to debug syntax errors
    - **Solution:** Better error parsing (TO DO)
