@@ -36,6 +36,27 @@ Provide a browser-first playground that supports Markdown, Mermaid, SVG, and mix
 - Save/load dashboard
 - Versioning/history
 
+## Planned Authoring and Import Capabilities (not implemented)
+- Preserve the existing Mermaid source editor and Markdown live preview as first-class authoring modes.
+- Add a visual SVG editor with source/canvas synchronization, selection and transforms, text/style editing, grouping, layers, snapping/alignment, zoom/pan, and SVG/PNG/PDF export.
+- Import PNG, JPG/JPEG, and WebP diagrams and offer distinct paths for raster-to-vector tracing, image-to-structured editable diagrams, and image-to-diagram code.
+- Recognize boxes, arrows, labels, and relationships; extract text; let users review and correct the resulting editable graph.
+- Initially target Editable Canvas, SVG, and Mermaid output; consider D2 and PlantUML adapters later.
+- Include image cleanup to remove AI tags/labels. Product design must specify if “tag” means embedded metadata, a visible mark, or both.
+- Use a shared internal diagram representation (nodes, edges, groups, metadata) as the interchange layer for image and format conversion.
+- Treat the following as candidate later inputs, not first-release scope: SQL/schema and ORM models; OpenAPI, GraphQL, AsyncAPI, and Postman; source repositories/code; Terraform, Kubernetes/Helm, Compose, cloud infrastructure, and CI pipelines.
+- Treat D2, PlantUML, Graphviz/DOT, Structurizr DSL/C4, draw.io, Excalidraw, Lucidchart, Visio, and Figma SVG as candidate formats/importers, with partial support explicitly documented.
+- Candidate outputs beyond the current exports include WebP, Mermaid, D2, PlantUML, DOT, HTML, and portable diagram JSON.
+- Later engineering workflows may include source/model/visual diffs, Git and PR integration, architecture drift checks, and MCP tools for coding agents.
+- AI-assisted edits should be expressed as reviewable changes to the diagram model (nodes, relationships, groups, layout), not just regenerated pictures.
+- Provide templates for common software architecture and engineering diagrams, plus general diagrams such as mind maps, org charts, BPMN, timelines, and user journeys.
+
+### Planned conversion quality requirements
+- Declare support by source format, target format, and diagram type; do not imply universal round-trip fidelity.
+- Preserve original source and import provenance when a conversion loses unsupported syntax or semantics.
+- For image recognition, expose uncertain/missing labels and relationships for user review before finalizing the diagram.
+- Measure round-trip preservation and recognition quality on supported subsets.
+
 Feature flags:
 - `NEXT_PUBLIC_FEATURE_AUTH`
 - `NEXT_PUBLIC_FEATURE_SAVE`
@@ -67,3 +88,8 @@ Feature flags:
 - Versioning model for Phase 2 (snapshot-only vs diff-based).
 - Persistence backend design once save is enabled.
 - Permission model for shared documents after auth rollout.
+- Exact behavior and scope of AI tag removal (metadata, visible mark, or both).
+- Whether PDF page import belongs in the first image-conversion release.
+- Which diagram types and format conversions the first structured image recognition release must support.
+- Which Mermaid diagram types can be represented and round-tripped without loss in the first model adapter.
+- Which later format/importer has sufficient user demand to follow Mermaid, image, and SVG foundations.

@@ -2,7 +2,7 @@
 
 > **Write. Render. Share.** — Your team's technical memory, written in code, seen as diagrams.
 
-A developer-native diagramming and documentation studio that supports Markdown, Mermaid, SVG, and Mixed content with live preview, export, and sharing.
+A developer-native diagramming and documentation studio for writing, rendering, and sharing Markdown, Mermaid, SVG, and mixed documents.
 
 [![Phase](https://img.shields.io/badge/Phase-1%20MVP-blue)](docs/ROADMAP.md)
 [![Progress](https://img.shields.io/badge/Progress-90%25-yellow)](docs/STATUS.md)
@@ -32,8 +32,15 @@ A developer-native diagramming and documentation studio that supports Markdown, 
 ### Roadmap (Phase 2+)
 - 📋 **Accounts & Spaces** - Save, organize, version history
 - 🤖 **AI Layer (BYOAI)** - Natural language → diagram with your own AI key
+- 🎨 **Visual SVG Editing** - Edit SVG source and diagram elements on a synchronized canvas
+- 🖼️ **Image-to-Diagram** - Convert diagram images into reviewed, editable nodes and edges, with Mermaid output
+- 🧹 **Image Cleanup** - Remove AI tags/labels from images (exact metadata/visible-mark behavior to be defined)
+- 🧩 **Diagram Conversion Engine** - A portable diagram model connecting selected inputs, visual editing, and tested output adapters
 - 🔗 **Sharing & Gallery** - Embeds, public gallery, presentation mode
 - 👥 **Collaboration** - Real-time co-editing, GitHub sync, REST API
+
+These visual editing and image conversion features are planned; the current app provides Mermaid editing, Markdown preview, SVG source rendering, and file export.
+Longer-term candidates include D2, PlantUML, Graphviz, schema/API/code/infrastructure import, repository architecture maps, diagram diffs, Git/PR workflows, and MCP tools. See the roadmap for sequencing; support will be added in tested subsets rather than as a blanket format-compatibility promise.
 
 [See full roadmap →](docs/ROADMAP.md)
 

@@ -36,6 +36,30 @@
 - SVG: raw SVG validation/sanitization -> injected output
 - Mixed: fenced block parsing for Markdown + Mermaid composition
 
+## Planned Diagram Model and Conversion Architecture
+
+The current app stores mode-specific source content and renders it to HTML/SVG. A canonical editable diagram model is a future architectural track; it is not implemented yet.
+
+```text
+Input adapters (Mermaid, SVG, image, SQL/API/code/infrastructure)
+                         ↓
+       Versioned Diagram JSON (nodes, edges, groups,
+         styles, layout, semantics, source metadata)
+                         ↓
+        Canvas editor · source editor · AI operations
+                         ↓
+Output adapters (SVG, Mermaid, D2, PlantUML, DOT,
+                    PNG, PDF, Markdown, HTML)
+```
+
+Design constraints for this track:
+- Use explicit, versioned import/export adapters; avoid direct pairwise converters as the architecture grows.
+- Preserve source text and provenance so lossy or unsupported mappings can be surfaced and original content remains recoverable.
+- Define round-trip support per format and per diagram type. “Supported” must not imply perfect equivalence for every feature.
+- Treat image recognition as a proposal with confidence and human review; OCR, geometry, and relationship inference produce different kinds of evidence.
+- Keep SVG sanitization on every untrusted import and render path.
+- Add format adapters incrementally: begin with the canvas model and a Mermaid subset, then prioritize D2/PlantUML, Graphviz, and structured engineering inputs from observed demand.
+
 ## Security Boundaries
 - Untrusted user input is never injected without sanitization.
 - Markdown and Mermaid outputs are sanitized before render.

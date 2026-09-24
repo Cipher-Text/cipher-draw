@@ -5,6 +5,41 @@
 **Last Updated:** June 24, 2026
 **Current Phase:** Phase 1 (MVP Editor) - 95% Complete
 
+## MVP+ Strategic Priorities: Editable Diagram Engine
+
+Existing Mermaid editing, Markdown preview, SVG rendering, and export remain the current foundation. These are the first major planned investments after Phase 1; they are not implemented yet:
+
+1. Visual SVG/canvas editor with shapes, connectors, labels, styles, layers, grouping, multi-select, ordering, undo/redo, alignment, snap/grid, zoom/pan, copy/paste, reusable components, and icons.
+2. Versioned internal diagram JSON model for nodes, edges, groups, styles, layout, semantics, and source provenance.
+3. Mermaid ↔ model/canvas synchronization for a defined subset; document limits and retain original source when mapping is lossy.
+4. Image/screenshot → reviewed editable graph; prioritize readable flowcharts before broad support for arbitrary diagram types.
+5. Image → Mermaid for supported flowcharts.
+6. D2 and PlantUML adapters, selected by user demand.
+7. SQL/schema → ER diagram.
+8. OpenAPI and related API specs → API diagrams.
+9. Repository/code → module, dependency, and architecture diagrams.
+10. Infrastructure sources → topology and CI/CD diagrams.
+
+Follow with node/relationship/visual diffs, Git and PR workflows, architecture drift checks, and MCP tools for coding agents. Add the longer-tail inputs and outputs listed in ROADMAP.md only as individual adapters with explicit supported subsets.
+
+### Conversion principles
+- Separate raster tracing from semantic image-to-diagram reconstruction.
+- Show confidence and let users correct extracted text, shapes, and relationships.
+- Preserve source and make unsupported mappings visible; never silently claim full round-trip fidelity.
+- Prioritize tested source/target pairs over a combinatorial promise of “any format to any format.”
+
+## Product Direction: Visual Editing and Image Import (planned)
+
+The current MVP already supports Mermaid source editing and Markdown preview. The following are planned work and are not implemented yet:
+
+- **SVG visual editor:** canvas editing alongside Monaco source editing, synchronized source/canvas state, node transforms and styling, groups, layers, alignment, snapping, zoom/pan, and export.
+- **Image-to-diagram:** import PNG/JPG/WebP and reconstruct boxes, arrows, labels, and relationships as editable diagram elements. Include a correction/review step.
+- **Multiple conversion paths:** raster-to-vector tracing, image-to-structured diagram, and image-to-diagram code are separate outcomes. Target editable canvas/SVG and Mermaid first; D2 and PlantUML can follow.
+- **AI tag removal:** provide image cleanup to remove AI tags/labels. Decide during UX design whether this means embedded metadata, visible marks, or both.
+- **Shared diagram model:** use nodes, edges, groups, and metadata as a common representation for SVG, image recognition, Mermaid, and future format adapters.
+
+Suggested sequencing: define the shared diagram model and SVG canvas foundation first; then add image recognition and Mermaid conversion once users can inspect and correct the structured result.
+
 ---
 
 ## 🎯 Immediate Priority (Complete Phase 1)

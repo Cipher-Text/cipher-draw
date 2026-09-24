@@ -1,6 +1,8 @@
 # Cipher Draw — Product Roadmap
 
-**Vision:** Make Cipher Draw the fastest way to write, preview, and share technical docs and diagrams from one workspace.
+**Vision:** Turn technical inputs into structured, editable diagrams, then let users edit and export them in useful formats.
+
+**Expanded authoring direction:** Preserve code-first Mermaid editing and Markdown preview, and add a visual SVG canvas plus image import that can turn diagrams into editable structured content. Image cleanup should also offer removal of AI tags/labels. These are planned capabilities, not current MVP features.
 
 **Current Phase:** Phase 1 (MVP Editor) - 85% Complete
 **Next Milestone:** Public Beta Launch
@@ -15,6 +17,8 @@ MVP (Editor) →  Accounts &   →   AI Layer    →  Sharing &     →  Collabo
 [85% DONE]      Spaces           (BYOAI)        Gallery           & API
                 [NOT STARTED]    [NOT STARTED]  [NOT STARTED]    [NOT STARTED]
 ```
+
+This roadmap describes candidate capabilities, not a promise to support every source/target combination. Prioritize reliable, reviewable conversions over a broad but lossy “any input → any output” claim.
 
 **Timeline:**
 - Phase 1: 3 weeks (85% complete, 1-2 days remaining)
@@ -131,9 +135,70 @@ MVP (Editor) →  Accounts &   →   AI Layer    →  Sharing &     →  Collabo
 - Improve/refine diagram suggestions
 - Convert between syntaxes (Mermaid ↔ D2 ↔ PlantUML)
 - Generate from SQL schema / JSON / code
+- Convert diagram images into editable diagrams by recognizing nodes, edges, labels, and relationships
+- Offer editable canvas/SVG and Mermaid outputs first; add D2 and PlantUML adapters later
+- Offer an image cleanup action to remove AI tags/labels; specify whether this covers embedded metadata, visible marks, or both during design
+
+### Visual Diagram Authoring (planned, staged across Phases 2–3)
+- Open/import SVG and edit its source in Monaco or its elements on a visual canvas
+- Keep source and canvas changes synchronized
+- Select, move, resize, and edit node text/styles; group/ungroup; manage layers; snap, align, zoom, and pan
+- Export edited diagrams to SVG, PNG, and PDF
+- Establish a shared internal diagram model (nodes, edges, groups, metadata) for image recognition and format conversion
+- Keep Mermaid editing and Markdown preview as core code authoring paths, connecting Mermaid to the visual model where conversion is reliable
+
+### Image Import and Conversion (planned)
+- Start with PNG, JPG/JPEG, and WebP; evaluate screenshots, scanned diagrams, whiteboards, and PDF pages
+- Distinguish raster-to-vector tracing from image-to-structured-diagram conversion and image-to-diagram-code generation
+- Detect boxes, arrows, text, and relationships, with a review step for correcting recognition
+- Allow clean reconstruction as an editable canvas/SVG or exported PNG/SVG
 
 ### Milestone
 > A user with no knowledge of Mermaid syntax types: "Create a microservices diagram with API Gateway, Auth Service, User Service, and PostgreSQL" and gets a rendered diagram in 3 seconds using their own OpenAI key.
+
+---
+
+## 📍 Diagram Engine and Conversion Track (MVP+, staged)
+
+This is a cross-phase product track that complements Accounts, AI, and Sharing. The current implementation already has Mermaid editing, Markdown preview, SVG source rendering, and SVG/PNG/PDF/Markdown export. The following work is planned and is not implemented.
+
+### Foundation: internal diagram model and visual canvas
+- Define a versioned, portable JSON diagram model for nodes, edges, groups, styles, layout, and semantic metadata.
+- Add a visual canvas for native shapes, connectors, labels, groups, layers, multi-select, copy/paste, ordering, undo/redo, alignment/distribution, grid/snap, zoom/pan, reusable components, and icons.
+- Add SVG import and editing; retain source editing where useful and synchronize code, model, and canvas only for supported constructs.
+- Add Mermaid ↔ model/canvas support incrementally by diagram type. Preserve unsupported syntax as source or mark conversion limits instead of silently dropping it.
+
+### Image and document conversion
+- Start with PNG, JPG/JPEG, and WebP; accept SVG as an editable import. Evaluate screenshots, whiteboards, scans, PowerPoint exports, and PDF pages as input workflows.
+- Offer separate operations: raster-to-vector trace, image-to-structured editable graph, and image-to-diagram code.
+- For structured conversion, detect/extract nodes, connectors, labels, and relationships; show confidence/uncertainty and require review/editing before treating the result as authoritative.
+- First targets: editable canvas/model, SVG, and Mermaid. Add other targets only when their model mapping is useful and tested.
+
+### Prioritized MVP+ sequence
+1. Visual SVG/canvas editor foundation.
+2. Versioned internal diagram JSON model.
+3. Mermaid ↔ model/canvas for a defined subset, with round-trip behavior documented.
+4. Image/screenshot → reviewed editable diagram.
+5. Image → Mermaid for supported flowcharts.
+6. D2 and PlantUML render/edit or conversion support, prioritized by user demand.
+7. SQL/schema → ER diagrams.
+8. OpenAPI/GraphQL/AsyncAPI/Postman → API diagrams.
+9. Repository/code → module, dependency, and architecture diagrams.
+10. Infrastructure inputs (Terraform, Kubernetes/Helm, Compose, CloudFormation/Pulumi, CI pipelines) → topology/flow diagrams.
+
+### Candidate format and integration backlog (later, scope to validate)
+- Diagram-as-code: Mermaid, SVG, D2, PlantUML, Graphviz/DOT, Structurizr DSL/C4, and Markdown with embedded diagrams.
+- Database sources: SQL DDL and PostgreSQL/MySQL/SQLite schemas, then Prisma, TypeORM, Hibernate/JPA, and Django models.
+- API sources: OpenAPI/Swagger, GraphQL, AsyncAPI, and Postman collections.
+- Code and infrastructure: Java/Spring, TypeScript/Node, Python, Go, C#, Terraform, Kubernetes, Helm, Compose, CloudFormation, Pulumi, GitHub Actions, GitLab CI, and Jenkins.
+- Existing diagram tools: draw.io, Excalidraw, Lucidchart, Visio, Figma SVG, PowerPoint SVG, and native Mermaid/PlantUML/Graphviz files; partial import is acceptable when stated.
+- Output candidates: SVG, PNG, WebP, PDF, Mermaid, D2, PlantUML, DOT, Markdown, HTML, and the portable diagram JSON model.
+- Later workflow features: source/node/relationship/visual diffs, Git save/commit/branch/PR integration, architecture drift checks, and an MCP interface for coding agents.
+
+### AI-assisted operations (after model and edit operations stabilize)
+- Add or change nodes/relationships, reorganize groups, simplify/detail a view, explain or analyze an architecture, and repair layout.
+- Keep AI actions reviewable and grounded in model changes; support BYOAI/local providers where feasible.
+- Treat architecture templates (system, microservices, event-driven, C4, deployment, network, Kubernetes, CI/CD) and general diagrams (mind maps, org charts, decision trees, timelines, BPMN, data flow, user journeys) as template/catalog scope rather than separate engines.
 
 ---
 
@@ -213,6 +278,11 @@ MVP (Editor) →  Accounts &   →   AI Layer    →  Sharing &     →  Collabo
 - Plugin registry at `/plugins`
 - Community contributions
 
+**Diagram workflows (later candidates):**
+- Git-native save/branch/commit and source, model, and visual diagram diffs
+- PR previews and checks for changed or stale diagrams
+- MCP tools for create/open/update/render/convert/analyze repository operations
+
 ### Milestone
 > A team of 5 engineers uses Cipher Draw daily: they co-edit architecture diagrams, sync with their GitHub repo, embed diagrams in their docs site, and use the REST API to auto-generate diagrams from CI.
 
@@ -258,6 +328,11 @@ MVP (Editor) →  Accounts &   →   AI Layer    →  Sharing &     →  Collabo
 - Teams with 2+ members > 30% of paid users
 - GitHub sync adoption > 50% of teams
 - API usage > 25% of all renders
+
+**Diagram conversion track:**
+- Conversion review acceptance rate, measured by how often users keep/edit the proposed graph
+- Node, edge, and label recognition precision for supported image classes
+- Round-trip preservation rate for each supported source/target format pair
 
 ---
 

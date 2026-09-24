@@ -101,6 +101,7 @@
 | PlantUML | Enterprise teams use this — opens a whole audience |
 | Graphviz DOT | Academic, research, and CS communities |
 | BPMN | Business process teams, non-dev audience |
+| Structurizr DSL / C4 | Standardized system/context/container modeling; prioritize after the first visual/model foundations |
 
 ---
 
@@ -151,6 +152,18 @@
 | Ollama (local AI) support | Privacy + cost = self-hosters love this ⭐⭐⭐ |
 | OpenAI, Claude, Gemini support | Covers 95% of users who have an AI key |
 
+## Visual Editing and Conversion
+
+| Feature | Value |
+|---|---|
+| Versioned diagram JSON model | Makes structured editing and format adapters composable |
+| Visual canvas for SVG and diagram model | Direct manipulation, groups, layers, alignment, snap, zoom, and undo/redo |
+| Mermaid ↔ model/canvas for a documented subset | Connects existing code-first workflow to visual editing without promising impossible universal round trips |
+| Image → reviewed editable graph | Reconstruct nodes, edges, labels, and relationships; human review handles uncertain recognition |
+| Separate vector tracing from semantic reconstruction | Users can choose scalable artwork or editable diagram structure |
+| D2, PlantUML, Graphviz/DOT adapters | Expand syntax coverage based on user demand and mapped feature support |
+| JSON model export | Portable, tool-friendly representation of editable diagram structure |
+
 ---
 
 ## Collaboration
@@ -172,6 +185,9 @@
 | REST API for render endpoint | CI/CD pipelines can auto-generate diagrams |
 | Docker self-host image | Enterprises and privacy-first teams require this ⭐⭐ |
 | CLI tool (`cipher-draw render file.md`) | Devs want terminal access to everything |
+| MCP tools for coding agents | Let agents create, inspect, edit, render, convert, and analyze diagrams through structured operations |
+| Repository/code architecture maps | Turn modules and dependencies into reviewable diagrams |
+| Git/PR diagram diff and preview | Make diagram changes visible and reviewable in engineering workflows |
 
 ---
 
@@ -197,12 +213,12 @@
 ---
 
 ## 🌟 1. Diagram-to-Code Reverse Engineer
-**What:** Paste a screenshot or image of any diagram (whiteboard photo, Lucidchart export, draw.io screenshot) → Cipher Draw uses AI vision to convert it into editable Mermaid/D2 code.
+**What:** Import a screenshot or image of a diagram (whiteboard photo, Lucidchart export, draw.io screenshot) → Cipher Draw recognizes text, boxes, arrows, and relationships, then creates an editable structured diagram and optionally Mermaid/D2 code. Keep this distinct from simple raster-to-vector tracing.
 
 **Why it's amazing:**
-Teams have years of diagrams trapped in images, PDFs, and old tools. Cipher Draw becomes the migration path for all of them. No competitor does this.
+Teams have diagrams trapped in images, PDFs, and old tools. Reliable, reviewable conversion can make Cipher Draw a migration path for selected diagram types.
 
-**How:** AI vision model (GPT-4o Vision / Claude Vision) analyzes the image → generates diagram syntax → renders it live.
+**How:** AI vision model analyzes the image → proposes structured nodes and edges → user reviews/corrects them → Cipher Draw renders an editable canvas and can generate diagram syntax. Planned image cleanup should also include an action to remove AI tags/labels; define whether these are metadata tags, visible marks, or both.
 
 **Impact:** ⭐⭐⭐⭐⭐ — *"I uploaded a photo of our whiteboard and it became a live diagram in 10 seconds"* — this gets shared.
 
