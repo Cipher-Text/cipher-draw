@@ -336,6 +336,10 @@ apps/web/
 
 6. ~~**Debug toolbar**~~ — removed ✅
 
+7. ~~**Mermaid diagrams rendered with blank/label-less shapes**~~ — fixed ✅. `sanitizeSvg()` (`lib/sanitize/sanitize.ts`) runs `DOMPurify` with `USE_PROFILES: { svg: true }`, which does not allow `foreignObject` — and Mermaid 11 emits node/edge labels as `foreignObject > span` by default (`htmlLabels: true`), so every label was silently stripped, leaving empty shapes. Fixed by setting `htmlLabels: false` (both root-level and under `flowchart`) in `renderMermaid.ts`'s `mermaid.initialize()` calls, so Mermaid emits plain SVG `<text>/<tspan>` labels instead — those pass through the sanitizer untouched, with no change to the allowlist itself. Caught via visual QA (Playwright screenshots), not by the test suite — none of the existing tests render actual Mermaid output.
+
+8. ~~**View page title invisible in dark mode**~~ — fixed ✅. `app/view/[token]/page.tsx`'s root container only conditionally applied the `dark` class, unlike `app/page.tsx` which also sets `bg-background text-foreground` on the same element. Untinted elements (`<h1>`, `<h2>`) inherited an already-resolved light-theme black `color` from `<body>` instead of re-evaluating `--foreground` inside the `dark` scope. Fixed by adding `bg-background text-foreground` to the view page's root `appClass`.
+
 ---
 
 ## 🔐 Security

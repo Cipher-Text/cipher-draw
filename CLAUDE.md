@@ -554,20 +554,18 @@ GITHUB_CLIENT_SECRET="..."
    - **Workaround:** Phase 2 will add server-side save with short tokens
    - **Impact:** ~5% of use cases
 
-2. **Mobile Layout**
-   - **Issue:** Split panes may break on small screens (<768px)
-   - **Status:** Needs testing
-   - **Fix:** Tab-based view for mobile
-
-3. **No Keyboard Shortcuts**
-   - **Issue:** Developers expect `Ctrl+S`, `Ctrl+Enter`
-   - **Status:** Not implemented
-   - **Priority:** P0 (blocking launch)
-
-4. **System Theme Detection**
+2. **System Theme Detection**
    - **Issue:** No auto-detection of OS theme preference
    - **Workaround:** Manual theme toggle
    - **Priority:** P1 (nice-to-have)
+
+~~**Mobile Layout**~~ — fixed. Tab-based fallback (Split hidden below 640px) and 44px touch targets shipped; see `docs/STATUS.md` item #4.
+
+~~**No Keyboard Shortcuts**~~ — fixed. `Ctrl+S`/`Cmd+S` and `Ctrl+Enter`/`Cmd+Enter` implemented in `app/page.tsx`.
+
+~~**Mermaid diagrams render with blank labels**~~ — fixed. `sanitizeSvg()` was stripping Mermaid's `foreignObject`-based HTML labels (DOMPurify's `svg` profile doesn't allow `foreignObject`). `renderMermaid.ts` now sets `htmlLabels: false` (both root-level and under `flowchart`) so Mermaid emits plain SVG `<text>/<tspan>` labels, which survive sanitization untouched — no loosening of the sanitizer allowlist was needed.
+
+~~**View page title invisible in dark mode**~~ — fixed. `app/view/[token]/page.tsx`'s root container was missing `bg-background text-foreground` (present on the home page's root but not here), so untinted text inherited the light theme's near-black color instead of picking up the `dark` class's override. Added the missing utility classes.
 
 ### Architectural Limitations (Phase 1)
 

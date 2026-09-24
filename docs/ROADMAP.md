@@ -4,7 +4,7 @@
 
 **Expanded authoring direction:** Preserve code-first Mermaid editing and Markdown preview, and add a visual SVG canvas plus image import that can turn diagrams into editable structured content. Image cleanup should also offer removal of AI tags/labels. These are planned capabilities, not current MVP features.
 
-**Current Phase:** Phase 1 (MVP Editor) - 85% Complete
+**Current Phase:** Phase 1 (MVP Editor) - 98% Complete
 **Next Milestone:** Public Beta Launch
 
 ---
@@ -14,14 +14,14 @@
 ```
 Phase 1         Phase 2          Phase 3         Phase 4          Phase 5
 MVP (Editor) →  Accounts &   →   AI Layer    →  Sharing &     →  Collaboration
-[85% DONE]      Spaces           (BYOAI)        Gallery           & API
+[98% DONE]      Spaces           (BYOAI)        Gallery           & API
                 [NOT STARTED]    [NOT STARTED]  [NOT STARTED]    [NOT STARTED]
 ```
 
 This roadmap describes candidate capabilities, not a promise to support every source/target combination. Prioritize reliable, reviewable conversions over a broad but lossy “any input → any output” claim.
 
 **Timeline:**
-- Phase 1: 3 weeks (85% complete, 1-2 days remaining)
+- Phase 1: 3 weeks (98% complete, Vercel dashboard linking + real-device mobile QA remaining)
 - Phase 2: 4 weeks
 - Phase 3: 3 weeks
 - Phase 4: 3 weeks
@@ -32,7 +32,7 @@ This roadmap describes candidate capabilities, not a promise to support every so
 
 ## 📍 Phase 1: MVP Editor (Week 1-3)
 
-**Status:** 🟡 85% Complete
+**Status:** 🟡 98% Complete
 
 ### Goals
 - Anyone can write, render, and share a diagram immediately
@@ -379,4 +379,4 @@ This is a cross-phase product track that complements Accounts, AI, and Sharing. 
 ---
 
 *Roadmap maintained by Cipher Text Labs*
-*Last updated: February 27, 2026*
+*Last updated: September 25, 2026*

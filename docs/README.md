@@ -1,6 +1,6 @@
 # Cipher Draw Documentation
 
-**Current Phase:** Phase 1 (MVP Editor) - 85% Complete
+**Current Phase:** Phase 1 (MVP Editor) - 98% Complete
 **Next Milestone:** Public Beta Launch (1-2 days)
 
 ---
@@ -22,7 +22,7 @@
 
 ### 📊 Planning & Status
 - **[STATUS.md](./STATUS.md)** ⭐ START HERE
-  - Current implementation status (85% Phase 1)
+  - Current implementation status (98% Phase 1)
   - Phase 1 completion tasks with time estimates
   - What works, what's missing
 
@@ -79,7 +79,7 @@
 ## 🗺️ Current Status
 
 **Phase:** Phase 1 (MVP Editor)
-**Progress:** 85% Complete
+**Progress:** 98% Complete
 **Timeline:** 1-2 days to public beta
 
 ### ✅ What Works
@@ -87,15 +87,17 @@
 - Live preview with debouncing
 - Export to SVG, PNG, PDF, MD
 - URL-based sharing
+- Read-only view page + fork functionality
+- Keyboard shortcuts (`Ctrl+S`, `Ctrl+Enter`)
+- Mobile-responsive layout (tab fallback, 44px touch targets)
+- CI/CD pipeline (GitHub Actions)
 - Theme system
 - State persistence
 
 ### ⚠️ What's Missing
-- Read-only view page
-- Fork functionality
-- Keyboard shortcuts
-- Mobile testing
-- CI/CD pipeline
+- Vercel dashboard linking (config ready, needs account access)
+- Real-device mobile QA (iOS Safari, Android Chrome)
+- System theme detection
 
 **See [STATUS.md](./STATUS.md) for full task breakdown.**
 
@@ -104,7 +106,7 @@
 ## 📊 Phase Overview
 
 ```
-Phase 1: MVP Editor           ████████████████░░ 85%  🔄 Active
+Phase 1: MVP Editor           ███████████████████░ 98%  🔄 Active
 Phase 2: Accounts & Spaces    ░░░░░░░░░░░░░░░░░░  0%  ⏸️ Not Started
 Phase 3: AI Layer (BYOAI)     ░░░░░░░░░░░░░░░░░░  0%  ⏸️ Not Started
 Phase 4: Sharing & Gallery    ░░░░░░░░░░░░░░░░░░  0%  ⏸️ Not Started
@@ -183,4 +185,4 @@ docs/
 ---
 
 *Documentation maintained by Cipher Text Labs*
-*Last updated: February 27, 2026*
+*Last updated: September 25, 2026*

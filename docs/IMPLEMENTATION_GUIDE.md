@@ -2,8 +2,8 @@
 
 **Purpose:** This guide helps AI coding assistants (like Claude, GPT, Cursor, etc.) understand the codebase and implement features correctly.
 
-**Last Updated:** February 27, 2026
-**Current Phase:** Phase 1 (MVP Editor) - 85% Complete
+**Last Updated:** September 25, 2026
+**Current Phase:** Phase 1 (MVP Editor) - 98% Complete
 
 ---
 
@@ -14,8 +14,8 @@ Cipher Draw is a developer-native diagramming and documentation studio that supp
 
 ### Current Status
 - **Phase:** Phase 1 (MVP Editor)
-- **Progress:** 85% complete
-- **Next:** Read-only view page, keyboard shortcuts, mobile responsive
+- **Progress:** 98% complete
+- **Next:** Vercel dashboard linking, real-device mobile QA — see `docs/STATUS.md` for the full list
 
 ### Key Architectural Decisions
 1. **No backend yet** - Phase 1 is frontend-only
@@ -194,6 +194,7 @@ useEffect(() => {
 - Theme-aware (dark/light)
 - Returns SVG string
 - Catches syntax errors
+- Initializes Mermaid with `htmlLabels: false` (root-level *and* under `flowchart`) — required so labels come out as SVG `<text>/<tspan>` instead of `foreignObject`+HTML, which `sanitizeSvg()`'s DOMPurify `svg` profile strips (see Common Pitfalls below)
 
 **renderSvg.ts:**
 - Validates and sanitizes raw SVG
@@ -486,6 +487,21 @@ import { sanitize } from '@/lib/sanitize/sanitize';
 <div dangerouslySetInnerHTML={{ __html: sanitize(content) }} />
 ```
 
+### 5. Mermaid Labels vs. `sanitizeSvg()`
+❌ **Don't** assume Mermaid's default output survives `sanitizeSvg()`. Mermaid emits labels as `foreignObject > span` by default (`htmlLabels: true`), but `sanitizeSvg()` sanitizes with `USE_PROFILES: { svg: true, svgFilters: true }`, and DOMPurify's `svg` profile does not allow `foreignObject` — it gets silently stripped, leaving empty label groups (blank diagram shapes, no visible error).
+
+✅ **Do:** keep Mermaid's own `mermaid.initialize()` config set to `htmlLabels: false` — **at both the root level and under `flowchart`** (Mermaid 11's node-shape rendering path reads the root-level `config.htmlLabels`; edges/legacy shapes read `config.flowchart.htmlLabels` — you need both or only edge labels render):
+```typescript
+mermaid.initialize({
+  startOnLoad: false,
+  securityLevel: 'strict',
+  theme: theme === 'dark' ? 'dark' : 'default',
+  htmlLabels: false,
+  flowchart: { htmlLabels: false }
+});
+```
+This makes Mermaid emit plain SVG `<text>/<tspan>` labels, which pass through the sanitizer's `svg` profile untouched. Don't "fix" this by loosening the sanitizer's allowlist to permit `foreignObject` — that reopens an HTML-injection surface inside sanitized SVG output. If you add a new Mermaid-based renderer or bump the Mermaid version, verify labels still render (visually, or by checking for `<text>` elements in the output `<g class="label">` groups) — nothing in the current test suite renders actual Mermaid SVG output, so this class of bug won't be caught by `pnpm test`.
+
 ---
 
 ## 📦 Dependencies Reference
@@ -518,7 +534,7 @@ import { sanitize } from '@/lib/sanitize/sanitize';
 
 ## 🎯 Priority Features (Phase 1 Completion)
 
-### 1. View Page (`/view/[token]`) - PRIORITY 1
+### 1. View Page (`/view/[token]`) - PRIORITY 1 ✅ COMPLETE
 **Effort:** 2-3 hours
 **Files to create:**
 - `apps/web/app/view/[token]/page.tsx`
@@ -535,33 +551,33 @@ import { sanitize } from '@/lib/sanitize/sanitize';
 
 ---
 
-### 2. Keyboard Shortcuts - PRIORITY 2
+### 2. Keyboard Shortcuts - PRIORITY 2 ✅ COMPLETE
 **Effort:** 1-2 hours
 **Files to modify:**
 - `apps/web/app/page.tsx`
 
 **Requirements:**
-- `Ctrl+S` / `Cmd+S` → Save (show toast notification)
-- `Ctrl+Enter` / `Cmd+Enter` → Force re-render
-- Prevent default browser behavior
-- Add keyboard shortcut help modal (`?` key)
+- [x] `Ctrl+S` / `Cmd+S` → Save (flashes "Saved" in the status bar; no toast component)
+- [x] `Ctrl+Enter` / `Cmd+Enter` → Force re-render
+- [x] Prevent default browser behavior
+- [ ] Keyboard shortcut help modal (`?` key) — not implemented, see STATUS.md #11 UI Improvements
 
 **Reference:** See "Pattern 1" above
 
 ---
 
-### 3. Mobile Responsive - PRIORITY 3
+### 3. Mobile Responsive - PRIORITY 3 ✅ COMPLETE (pending real-device QA)
 **Effort:** 3-4 hours
-**Files to modify:**
-- `apps/web/app/page.tsx`
-- `apps/web/app/globals.css`
+**Files modified:**
+- `apps/web/app/page.tsx`, `apps/web/app/view/[token]/page.tsx`
+- `apps/web/components/ui/button.tsx`, `apps/web/components/ui/select.tsx`
 
 **Requirements:**
-- Tab-based view on mobile (< 768px)
-- Two tabs: "Code" and "Preview"
-- Test touch interactions
-- Ensure buttons are 44px min touch target
-- Test on iOS Safari and Android Chrome
+- [x] Tab-based fallback below 640px ("Split" tab hidden, auto-falls back to "Editor")
+- [x] Ensure buttons are 44px min touch target (`h-11` default, `sm:h-8`/`sm:h-9` desktop)
+- [ ] Test on iOS Safari and Android Chrome — needs a real device, not verifiable in a headless dev environment
+
+See STATUS.md item #4 for full detail.
 
 ---
 
